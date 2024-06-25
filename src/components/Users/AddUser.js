@@ -1,37 +1,51 @@
+
+
 import React, { useState } from "react";
-import './AddUser.css'
 import Card from "../UI/Card";
 import Button from "../UI/Button";
+import "./AddUser.css";
 
-const AddUser = () => {
-  const [enteredNameValue ,setenteredNameValue] = useState('')
-  const [enteredAgeValue,setenteredAgeValue] =useState('')
+const AddUser = (props) => {
+  const [enteredUsername, setEnteredUsername] = useState("");
+  const [enteredAge, setEnteredAge] = useState("");
 
   const addUserHandler = (event) => {
     event.preventDefault();
-    console.log(enteredNameValue,enteredAgeValue)
-    setenteredNameValue('')
-    setenteredAgeValue('')
+    if(enteredUsername.trim().length >0 && enteredAge > 0){
+      props.onAddUser(enteredUsername,enteredAge)
+    }
+   
     
+    setEnteredUsername("");
+    setEnteredAge("");
   };
-  const userNameHandler = (event) =>{
-    setenteredNameValue(event.target.value)
-  }
 
-  const userAgeHandler =(event) =>{
-    setenteredAgeValue(event.target.value)
+  const usernameChangeHandler = (event) => {
+    setEnteredUsername(event.target.value);
+  };
 
-  }
+  const ageChangeHandler = (event) => {
+    setEnteredAge(event.target.value);
+  };
 
   return (
     <Card className="input">
-      <form  onSubmit={addUserHandler}>
+      <form onSubmit={addUserHandler}>
         <label htmlFor="username">Username</label>
-        <input id="username" type="text" value={enteredNameValue} onChange={userNameHandler} />
+        <input
+          id="username"
+          type="text"
+          value={enteredUsername}
+          onChange={usernameChangeHandler}
+        />
         <label htmlFor="age">Age</label>
-        <input id="age" type="number" value={enteredAgeValue} onChange={userAgeHandler}/>
-        <Button type="submit">Add USer</Button>
-       
+        <input
+          id="age"
+          type="number"
+          value={enteredAge}
+          onChange={ageChangeHandler}
+        />
+        <Button type="submit">Add User</Button>
       </form>
     </Card>
   );
